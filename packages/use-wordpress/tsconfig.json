@@ -26,5 +26,6 @@
     },
     "jsx": "react",
     "esModuleInterop": true
-  }
+  },
+  "types": ["./types/wpapi/index.d.ts"]
 }

@@ -1,13 +1,9 @@
 import WPAPI from 'wpapi';
+import { useRef } from 'react';
 export default function useWordPres(endpoint: string) {
-  const initSite = async () => {
-    const site = await WPAPI.discover(url);
-    return site;
-  };
-
-  const wp = new WPAPI({ endpoint });
+  let wp = useRef(new WPAPI({ endpoint }));
 
   return {
-    wp,
+    wp: wp.current,
   };
 }

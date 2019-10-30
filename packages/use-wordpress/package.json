@@ -13,7 +13,9 @@
     "start": "tsdx watch",
     "build": "tsdx build",
     "test": "tsdx test --env=jsdom",
-    "lint": "tsdx lint"
+    "lint": "tsdx lint",
+    "demo:install": "yarn --cwd example install",
+    "demo:start": "yarn --cwd example start"
   },
   "peerDependencies": {
     "react": ">=16"
