@@ -5,15 +5,20 @@ export const Demo = (props: { page: number }) => {
   const [posts, setPosts] = useState<Array<any>>([]);
   const { wp } = useWordPress('https://ninjaforms.com/wp-json');
   useEffect(() => {
+    let isSubscribed = true;
     wp.posts()
       .page(props.page)
       .then((data: Array<any>) => {
-        console.log(data);
-        setPosts(data);
+        if (isSubscribed) {
+          setPosts(data);
+        }
       })
       .catch((err: Error) => {
         console.log(err);
       });
+    return () => {
+      isSubscribed = false;
+    };
   }, [setPosts, props.page]);
 
   return (
