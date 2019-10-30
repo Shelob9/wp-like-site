@@ -9,22 +9,55 @@ export default function useWordPress(endpoint: string) {
   return [wp.current];
 }
 
-const App = () => {
-  const [page, setPage] = React.useState(1);
-  const [posts, setPosts] = React.useState<Array<any>>([]);
-  const [wp] = useWordPress('https://calderaforms.com/wp-json');
-  const nextPage = () => {
-    setPage(page + 1);
-  };
-  const previousPage = () => {
-    if (page > 1) {
-      setPage(page - 1);
-    }
-  };
+function usePaging() {
+  const [currentPage, setPage] = React.useState(1);
+
   const [paging, setPaging] = React.useState({
     total: 0,
     totalPages: 0,
   });
+  const hasNextPage = () => {
+    return paging.totalPages === currentPage ? false : true;
+  };
+
+  const hasPreviousPage = () => {
+    return 1 !== currentPage;
+  };
+
+  const goToNextPage = () => {
+    setPage(currentPage + 1);
+  };
+
+  const goToPreviousPage = () => {
+    if (currentPage > 1) {
+      setPage(currentPage - 1);
+    }
+  };
+
+  return {
+    currentPage,
+    setPage,
+    paging,
+    setPaging,
+    goToNextPage,
+    goToPreviousPage,
+    hasNextPage,
+    hasPreviousPage,
+  };
+}
+
+function useWordPressPosts(wp) {
+  const {
+    currentPage,
+    setPage,
+    paging,
+    setPaging,
+    goToNextPage,
+    goToPreviousPage,
+    hasNextPage,
+    hasPreviousPage,
+  } = usePaging();
+  const [posts, setPosts] = React.useState<Array<any>>([]);
 
   React.useEffect(() => {
     if (!wp) {
@@ -32,9 +65,8 @@ const App = () => {
     }
     let isSubscribed = true;
     wp.posts()
-      .page(page)
+      .page(currentPage)
       .then(data => {
-        console.log(data);
         if (isSubscribed) {
           const _posts: Array<any> = [];
           Object.keys(data).forEach((key: string) => {
@@ -52,23 +84,42 @@ const App = () => {
     return () => {
       isSubscribed = false;
     };
-  }, [setPosts, page]);
+  }, [setPosts, currentPage]);
+
+  return {
+    posts,
+    currentPage,
+    paging,
+    goToNextPage,
+    goToPreviousPage,
+    hasNextPage,
+    hasPreviousPage,
+  };
+}
+const App = () => {
+  const [wp] = useWordPress('https://calderaforms.com/wp-json');
+  const {
+    posts,
+    currentPage,
+    paging,
+    goToNextPage,
+    goToPreviousPage,
+    hasNextPage,
+    hasPreviousPage,
+  } = useWordPressPosts(wp, {});
 
   return (
     <div>
       <div>
-        <button onClick={previousPage} disabled={1 === page ? true : false}>
+        <button onClick={goToPreviousPage} disabled={!hasPreviousPage()}>
           Previous Page
         </button>
-        <button
-          onClick={nextPage}
-          disabled={paging.totalPages === page ? true : false}
-        >
+        <button onClick={goToNextPage} disabled={!hasNextPage()}>
           Next Page
         </button>
         <ul>
           <li>Total Pages: {paging.totalPages}</li>
-          <li>Current Page: {page}</li>
+          <li>Current Page: {currentPage}</li>
           <li>Total Posts: {paging.total}</li>
         </ul>
       </div>
