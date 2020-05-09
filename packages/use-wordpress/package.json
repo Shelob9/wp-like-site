@@ -28,7 +28,7 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "name": "@tenspeed/use-wordpress",
+  "name": "@wp-like-site/use-wordpress",
   "author": "Josh Pollock",
   "module": "dist/use-wordpress.esm.js",
   "devDependencies": {
