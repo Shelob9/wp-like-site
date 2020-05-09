@@ -6,17 +6,10 @@ import { fetchFeatured } from './fetchFeatured';
 import { fetchTags } from './fetchTags';
 import wpFactory from './factories/wpFactory';
 
-/**
- * Get a post by slug
- *
- * @param slug
- * @param endpoint
- */
-export const getRemotePost = async (
-  slug: string,
+export const fetchWpLikePostData = async (
+  post: WpApiPost,
   endpoint: string
-): Promise<WpPost> => {
-  const post = await fetchPost(slug as string, endpoint);
+) => {
   const author = await fetchAuthor(post.author, endpoint);
   let featured: WpApiMedia | undefined = undefined;
   if (post.featured_media) {
@@ -42,6 +35,19 @@ export const getRemotePost = async (
   const wpLikePost = await factory.convertPost(post);
 
   return wpLikePost;
+};
+/**
+ * Get a post by slug
+ *
+ * @param slug
+ * @param endpoint
+ */
+export const getRemotePost = async (
+  slug: string,
+  endpoint: string
+): Promise<WpPost> => {
+  const post = await fetchPost(slug as string, endpoint);
+  return fetchWpLikePostData(post, endpoint);
 };
 
 /**

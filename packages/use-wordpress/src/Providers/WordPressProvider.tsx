@@ -9,6 +9,16 @@ import {
   WpTag,
   wpTagCollection,
 } from 'wpTypes';
+import { fetchPosts } from 'fetch/wordpress';
+import { fetchWpLikePostData } from 'fetch/wordpress/collectPosts';
+type wpPostPage = {
+  pageNumber: number;
+  postIds: string[];
+};
+
+type wpPostPages = {
+  [key: number]: wpPostPage;
+};
 
 const WordPressContent = React.createContext<{
   addPost: (post: WpPost) => void;
@@ -20,10 +30,12 @@ const WordPressContent = React.createContext<{
   getMedia: (id: string) => WpMedia | undefined;
   hasMedia: (id: string) => boolean;
   addMedia: (id: WpMedia) => void;
-
   getTag: (id: string) => WpTag | undefined;
   hasTag: (id: string) => boolean;
   addTag: (id: WpTag) => void;
+  fetchPageOfPosts: (pageNumber: number) => void;
+  getPageOfPosts: (pageNumber: number) => wpPostPages | undefined;
+  hasPageOfPosts: (pageNumber: number) => boolean;
 }>(
   //@ts-ignore
   null
@@ -69,11 +81,26 @@ const tagReducer = (state: wpTagCollection, action: TagAction) => {
   }
 };
 
-export const WordPressContentProvider = (props: { children: ReactChild }) => {
+type PageAction = { type: 'ADD'; page: wpPostPage };
+const pageReducer = (state: wpPostPages, action: PageAction) => {
+  switch (action.type) {
+    case 'ADD':
+      state[action.page.pageNumber] = action.page;
+      return state;
+  }
+};
+
+export const WordPressContentProvider = (props: {
+  children: ReactChild;
+  endpoint: string;
+}) => {
+  const { endpoint } = props;
+
   const [posts, postsDispatch] = useReducer(postsReducer, {});
   const [authors, authorDispatch] = useReducer(authorsReducer, {});
   const [medias, mediaDispatch] = useReducer(mediaReducer, {});
   const [tags, tagsDispatch] = useReducer(tagReducer, {});
+  const [pages, pagesDispatch] = useReducer(pageReducer, {});
 
   const hasPost = (id: string) => posts.hasOwnProperty(id);
   const addPost = (post: WpPost) => postsDispatch({ type: 'ADD_POST', post });
@@ -94,6 +121,41 @@ export const WordPressContentProvider = (props: { children: ReactChild }) => {
     hasTag(id) ? tags[id] : undefined;
   const addTag = (tag: WpTag) => tagsDispatch({ type: 'ADD', tag });
 
+  const fetchPageOfPosts = async (pageNumber: number) => {
+    let promises: Array<Promise<WpPost>> = [];
+    const postIds: string[] = [];
+    fetchPosts(endpoint, pageNumber).then(posts => {
+      posts.forEach(post => promises.push(fetchWpLikePostData(post, endpoint)));
+    });
+    Promise.all(promises).then((posts: WpPost[]) => {
+      posts.forEach((post: WpPost) => {
+        postIds.push(post.id);
+
+        addAuthor(post.author);
+        if (undefined !== post.featured) {
+          addMedia(post.featured);
+        }
+        if (post.tags) {
+          post.tags.forEach(tag => {
+            addTag(tag);
+          });
+        }
+      });
+    });
+    pagesDispatch({
+      type: 'ADD',
+      page: {
+        pageNumber,
+        postIds,
+      },
+    });
+  };
+
+  const hasPageOfPosts = (pageNumber: number) =>
+    pages.hasOwnProperty(pageNumber);
+  const getPageOfPosts = (pageNumber: number) =>
+    hasPageOfPosts(pageNumber) ? pages[pageNumber] : undefined;
+
   return (
     <WordPressContent.Provider
       value={{
@@ -109,6 +171,9 @@ export const WordPressContentProvider = (props: { children: ReactChild }) => {
         hasTag,
         getTag,
         addTag,
+        fetchPageOfPosts,
+        hasPageOfPosts,
+        getPageOfPosts,
       }}
     >
       {props.children}
