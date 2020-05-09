@@ -53,6 +53,7 @@
     "typescript": "^3.8.3"
   },
   "dependencies": {
+    "@types/wordpress__block-serialization-default-parser": "^3.2.0",
     "@wordpress/block-serialization-default-parser": "^3.6.0",
     "isomorphic-unfetch": "^3.0.0"
   }

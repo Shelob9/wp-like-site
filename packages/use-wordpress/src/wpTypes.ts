@@ -15,8 +15,18 @@ export interface WpPost {
   tags?: Array<tag>;
 }
 
+export type wpPostCollection = { [key: string]: WpPost };
+
 export interface WpAuthor extends PostAuthor {}
 
-export interface WpMedia extends Image {}
+export type wpAuthorCollection = { [key: string]: WpAuthor };
 
-export interface WpTag {}
+export interface WpMedia extends Image {
+  id: number;
+}
+export type wpMeditaCollection = { [key: string]: WpMedia };
+
+export interface WpTag extends tag {
+  id: number;
+}
+export type wpTagCollection = { [key: string]: WpTag };

@@ -1,11 +1,6 @@
-import { WpApiPost } from '@staticish/wp-api-to-static';
-import { WpPost, WpMedia } from '../wpTypes';
-import { tag, PostAuthor, Image } from '../types';
-import {
-  WpApiUser,
-  WpApiMedia,
-  WpApiTaxonomy,
-} from '@staticish/wp-api-to-static';
+import { WpApiPost, WpApiUser, WpApiMedia, WpApiTaxonomy } from '../wpApiTypes';
+import { WpPost, WpMedia } from '../../../wpTypes';
+import { tag, PostAuthor, Image } from '../../../types';
 
 /**
  * Getters for data not included in the WP-API post response
@@ -53,6 +48,8 @@ const findAvatar = (fromApi: WpApiUser): Image => {
  */
 export const featuredFromWpApi = (fromApi: WpApiMedia): WpMedia => {
   return {
+    //@ts-ignore
+    id: fromApi.id,
     src: fromApi.source_url,
     alt: fromApi.alt_text,
     height: fromApi.media_details ? fromApi.media_details.height : undefined,

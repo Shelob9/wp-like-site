@@ -7,3 +7,5 @@ export const fetchFeatured = async (
 ): Promise<WpApiMedia> => {
   return fetch(`${endpoint}/wp/v2/media/${featuredId}`).then(r => r.json());
 };
+
+export const fetchImage = fetchFeatured;

@@ -29,6 +29,7 @@ Object {
   "featured": Object {
     "alt": "CF Show Pro UI",
     "height": 1673,
+    "id": 168887,
     "src": "https://calderaforms.com/wp-content/uploads/2019/12/StockSnap_61AE320141.jpg",
     "width": 2508,
   },
@@ -76,6 +77,7 @@ Object {
   "featured": Object {
     "alt": undefined,
     "height": undefined,
+    "id": undefined,
     "src": undefined,
     "width": undefined,
   },

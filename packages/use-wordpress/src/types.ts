@@ -1,10 +1,10 @@
 /**
  * One tag for a post/ status.
  */
-export type tag = {
+export interface tag {
   label: string;
   slug: string;
-};
+}
 
 /**
  * Parts of post object that are an object expressing content such as post title and post content.
