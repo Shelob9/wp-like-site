@@ -1,0 +1,95 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`factory 1`] = `
+Object {
+  "author": Object {
+    "avatar": Object {
+      "alt": "Avatar for Josh Pollock",
+      "src": "https://secure.gravatar.com/avatar/90f0d6d84cc52508796d039eb81c4f06?s=96&d=mm&r=g",
+    },
+    "description": "Josh Pollock is VP of Engineering Experience at <a href=\\"https://saturdaydrive.io/\\">Saturday Drive</a>. Previously, he was the founder of CalderaWP and the lead developer of Caldera Forms. He is also a WordPress core contributor and the author of two books about WordPress development.",
+    "id": 1,
+    "link": Object {
+      "href": "https://calderaforms.com/author/josh/",
+      "text": "Josh Pollock",
+    },
+    "name": "Josh Pollock",
+    "slug": "josh",
+  },
+  "content": Object {
+    "protected": false,
+    "rendered": "
+<h2>Bug fixes as a present are kind of like getting",
+  },
+  "excerpt": Object {
+    "protected": false,
+    "rendered": "<p>Bug fixes as a present are kind of like getting socks for Christmas&#8230; not the most thrilling thing, but when you need socks&#8230; The holidays are often a different kind of time for teams. We want to keep moving all the things forward, but it&#8217;s also healthy to slow down and appreciate family, too. The &hellip; <a href=\\"https://calderaforms.com/2019/12/2019-holiday-update/\\" class=\\"more-link\\">Continue reading <span class=\\"screen-reader-text\\">A Quick Holiday Update!</span></a></p>
+",
+  },
+  "featured": Object {
+    "alt": "CF Show Pro UI",
+    "height": 1673,
+    "src": "https://calderaforms.com/wp-content/uploads/2019/12/StockSnap_61AE320141.jpg",
+    "width": 2508,
+  },
+  "id": "168826",
+  "published": "2019-12-17T11:16:33",
+  "slug": "2019-holiday-update",
+  "tags": Array [
+    Object {
+      "label": "#hiRoy",
+      "slug": "hiroy",
+    },
+  ],
+  "title": Object {
+    "rendered": "A Quick Holiday Update!",
+  },
+}
+`;
+
+exports[`factory deals with featured image being 0 1`] = `
+Object {
+  "author": Object {
+    "avatar": Object {
+      "alt": "Avatar for Josh Pollock",
+      "src": "https://secure.gravatar.com/avatar/90f0d6d84cc52508796d039eb81c4f06?s=96&d=mm&r=g",
+    },
+    "description": "Josh Pollock is VP of Engineering Experience at <a href=\\"https://saturdaydrive.io/\\">Saturday Drive</a>. Previously, he was the founder of CalderaWP and the lead developer of Caldera Forms. He is also a WordPress core contributor and the author of two books about WordPress development.",
+    "id": 1,
+    "link": Object {
+      "href": "https://calderaforms.com/author/josh/",
+      "text": "Josh Pollock",
+    },
+    "name": "Josh Pollock",
+    "slug": "josh",
+  },
+  "content": Object {
+    "protected": false,
+    "rendered": "
+<h2>Bug fixes as a present are kind of like getting",
+  },
+  "excerpt": Object {
+    "protected": false,
+    "rendered": "<p>Bug fixes as a present are kind of like getting socks for Christmas&#8230; not the most thrilling thing, but when you need socks&#8230; The holidays are often a different kind of time for teams. We want to keep moving all the things forward, but it&#8217;s also healthy to slow down and appreciate family, too. The &hellip; <a href=\\"https://calderaforms.com/2019/12/2019-holiday-update/\\" class=\\"more-link\\">Continue reading <span class=\\"screen-reader-text\\">A Quick Holiday Update!</span></a></p>
+",
+  },
+  "featured": Object {
+    "alt": undefined,
+    "height": undefined,
+    "src": undefined,
+    "width": undefined,
+  },
+  "id": "168826",
+  "published": "2019-12-17T11:16:33",
+  "slug": "2019-holiday-update",
+  "tags": Array [
+    Object {
+      "label": "#hiRoy",
+      "slug": "hiroy",
+    },
+  ],
+  "title": Object {
+    "rendered": "A Quick Holiday Update!",
+  },
+}
+`;
