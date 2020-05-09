@@ -11,6 +11,7 @@ import {
 } from 'wpTypes';
 import { fetchPosts } from 'fetch/wordpress';
 import { fetchWpLikePostData } from 'fetch/wordpress/collectPosts';
+import { Image } from 'types';
 type wpPostPage = {
   pageNumber: number;
   postIds: string[];

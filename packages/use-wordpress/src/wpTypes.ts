@@ -10,9 +10,9 @@ export interface WpPost {
   content: ContentObject;
   excerpt: ContentObject;
   published: string;
-  featured: Image | undefined;
+  featured: WpMedia | undefined;
   author: PostAuthor;
-  tags?: Array<tag>;
+  tags?: WpTag[];
 }
 
 export type wpPostCollection = { [key: string]: WpPost };
