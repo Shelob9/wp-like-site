@@ -23,7 +23,9 @@ export const getRemotePost = async (
     try {
       featured = await fetchFeatured(post.featured_media, endpoint);
     } catch {
-      (e: Error) => console.log(e);
+      (e: Error) => {
+        console.log(e);
+      };
     }
   }
 
